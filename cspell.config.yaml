@@ -1,0 +1,8 @@
+dictionaryDefinitions:
+  - name: cspell-known-words-dict
+    path: ./cspell-known-words-dict.txt
+    addWords: true
+dictionaries:
+  - cspell-known-words-dict
+allowCompoundWords: true
+

@@ -1,4 +1,4 @@
-import cspellESLintPluginRecommended from '@cspell/eslint-plugin/recommended';
+import cspellConfigs from '@cspell/eslint-plugin/configs';
 import js from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import configPrettier from 'eslint-config-prettier';
@@ -9,7 +9,6 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  cspellESLintPluginRecommended,
   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -22,12 +21,28 @@ export default defineConfig([
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  cspellConfigs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     plugins: { prettier: pluginPrettier, import: pluginImport },
     rules: {
-      'prettier/prettier': 'error',
+      'prettier/prettier': [
+        'error',
+        {
+          plugins: ['prettier-plugin-tailwindcss'], // Add TailwindCSS Prettier plugin
+        },
+      ],
+      '@cspell/spellchecker': [
+        'error',
+        {
+          configFile: new URL(
+            './cspell.config.yaml',
+            import.meta.url,
+          ).toString(),
+        },
+      ],
       'react/react-in-jsx-scope': 'off', // Disable React-in-scope rule for JSX
+      'react/no-unescaped-entities': 'off',
       'import/order': [
         'error',
         {
