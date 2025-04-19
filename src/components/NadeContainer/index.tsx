@@ -1,18 +1,26 @@
+// NadeContainer.tsx
+import React from 'react';
+
+import ActionsPanel from './ActionsPanel';
+import ImagePreview from './ImagePreview';
+
 interface Props {
   imgSrc?: string;
 }
 
-const NadeContainer = (props: Props) => {
-  const { imgSrc } = props;
+const DEFAULT_IMG_URL = './../../assets/react.svg';
+
+const handeImageError: React.ReactEventHandler<HTMLImageElement> = (e) => {
+  e.currentTarget.src = 'test';
+};
+
+const NadeContainer: React.FC<Props> = ({ imgSrc = DEFAULT_IMG_URL }) => {
   return (
     <div className="m-4 flex flex-row space-x-4 rounded-xl border p-4 shadow-md">
-      <div className="rounded-xl border bg-gray-100">
-        <img src={imgSrc} width={200} height={200} alt="img" />
-      </div>
-      <div className="flex-col space-y-4">
-        <div className="text-lg">actions:</div>
-        <div>put actions here</div>
-      </div>
+      <ImagePreview imgSrc={imgSrc} onError={handeImageError} />
+      <ActionsPanel>
+        {/* You can pass custom actions here if needed */}
+      </ActionsPanel>
     </div>
   );
 };
